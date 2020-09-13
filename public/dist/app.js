@@ -3,18 +3,29 @@
 console.log("app running");
 
 // JSX - JavaScript XML
+
+var app = {
+    title: "Indecision App",
+    subtitle: "Let the computer make decisions.",
+    options: ['One', 'Two']
+};
 var template = React.createElement(
     "div",
     null,
     React.createElement(
         "h1",
         null,
-        "Indecision App"
+        app.title
+    ),
+    app.subtitle && React.createElement(
+        "p",
+        null,
+        app.subtitle
     ),
     React.createElement(
         "p",
         null,
-        "This is JSX from Babel23"
+        app.options.length > 0 ? 'Here are your options' : 'No Options'
     ),
     React.createElement(
         "ol",
@@ -22,36 +33,55 @@ var template = React.createElement(
         React.createElement(
             "li",
             null,
-            "Item One"
+            "Item ",
+            app.options[0]
         ),
         React.createElement(
             "li",
             null,
-            "Item Two"
+            "Item ",
+            app.options[1]
         )
     )
 );
 
+// var username = 'Faisal';
+// var age = 25;
+// var loc = 'Islamabad'
+
+var user = {
+    name: 'Faisal',
+    age: 15,
+    location: 'Islamabad'
+};
+
+function getLocation(location) {
+    if (location) {
+        return React.createElement(
+            "p",
+            null,
+            "Location: ",
+            location
+        );
+    }
+}
 var templateTwo = React.createElement(
     "div",
     null,
     React.createElement(
         "h1",
         null,
-        "Faisal"
+        user.name ? user.name : 'Anonymous'
     ),
-    React.createElement(
+    user.age && user.age >= 18 && React.createElement(
         "p",
         null,
-        "Age: 25"
+        "Age: ",
+        user.age
     ),
-    React.createElement(
-        "p",
-        null,
-        "Location: Islamabad"
-    )
+    getLocation(user.location)
 );
 
 var element = document.getElementById("app");
 
-ReactDOM.render(templateTwo, element);
+ReactDOM.render(template, element);
