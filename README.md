@@ -3,7 +3,7 @@
 To run using babel cli 
 
 ```
-babel src/app.js --out-file=public/scripts/app.js --presets=env,react --watch
+babel src/app.js --out-file=public/dist/app.js --presets=env,react --watch
 ```
 
 Install and Start Live-Server 

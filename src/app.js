@@ -7,7 +7,7 @@ console.log("app running");
 const app = {
     title: "Indecision App",
     subtitle: "Let the computer make decisions.",
-    options: ['One', 'Two'],
+    options: ['One', 'Two', 'Three'],
     getListItems() {
         return this.options.map((item) => <li>Item {item}</li>)
     }
@@ -23,29 +23,35 @@ const template = (
     </div> 
 );
 
-// var username = 'Faisal';
-// var age = 25;
-// var loc = 'Islamabad'
+let num = 0;
 
-const user = {
-    name: 'Faisal',
-    age:    15,
-    location: 'Islamabad'
+const addOne = () => {
+    num++;
+    renderApp();
 }
 
-const getLocation = (location ) => {
-    if (location) {
-        return <p>Location: {location}</p>
-    }
+const minusOne = () => {
+    num--;
+    renderApp();
 }
-const templateTwo = (
-    <div>
-        <h1>{user.name ? user.name : 'Anonymous'}</h1>
-        {(user.age && user.age >= 18) && <p>Age: {user.age}</p>}
-        {getLocation(user.location)}
-    </div>
-)
+
+const reset = () => {
+    num = 0;
+    renderApp();
+}
+
+
+const renderApp = () => {
+    const templateTwo = (
+        <div>
+            <h1>{num}</h1>
+            <button onClick={addOne}>Counter++</button>
+            <button onClick={minusOne}>Counter--</button>
+            <button onClick={reset}>Reset</button>
+        </div>
+    );
+    ReactDOM.render(templateTwo, element);
+}
 
 const element = document.getElementById("app");
-
-ReactDOM.render(template, element);
+renderApp();
