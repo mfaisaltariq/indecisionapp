@@ -9,11 +9,11 @@ const app = {
     subtitle: "Let the computer make decisions.",
     options: [],
     getListItems() {
-        return this.options.map((item) => <li>Option {item}</li>)
+        return this.options.map((item) => <li key={item}>{item}</li>)
     }
 }
 
-const onFormSubmit = (e) => {
+const submitForm = (e) => {
     e.preventDefault();
     app.options.push(e.target.elements.option.value);
     e.target.elements.option.value = '';
@@ -23,6 +23,11 @@ const onFormSubmit = (e) => {
 const removeAllItems = () => {
     app.options = [];
     renderApp();
+}
+
+const pickRandom = () => {
+    const rand = Math.floor(Math.random() * app.options.length);
+    alert (app.options[rand]);
 }
 
 const element = document.getElementById("app");
@@ -36,11 +41,12 @@ const renderApp = () => {
             <ol>
                 {app.getListItems()}
             </ol>
-            <form onSubmit={onFormSubmit}>
+            <button onClick={removeAllItems}>Remove All Items</button>
+            <button disabled={app.options.length === 0} onClick={pickRandom}>What should I do?</button>
+            <form onSubmit={submitForm}>
                 <input type="text" name="option"/>
                 <button>Add Option</button>
             </form>
-            <button onClick={removeAllItems}>Remove All Items</button>
         </div> 
     );
     ReactDOM.render(template, element);
