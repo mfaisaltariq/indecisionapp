@@ -7,51 +7,46 @@ console.log("app running");
 const app = {
     title: "Indecision App",
     subtitle: "Let the computer make decisions.",
-    options: ['One', 'Two', 'Three'],
+    options: [],
     getListItems() {
-        return this.options.map((item) => <li>Item {item}</li>)
+        return this.options.map((item) => <li>Option {item}</li>)
     }
 }
-const template = ( 
-    <div>
-        <h1>{app.title}</h1>
-        {app.subtitle && <p>{app.subtitle}</p>}
-        <p>{app.options.length > 0 ? 'Here are your options': 'No Options'}</p>
-        <ol>
-            {app.getListItems()}
-        </ol>
-    </div> 
-);
 
-let num = 0;
-
-const addOne = () => {
-    num++;
+const onFormSubmit = (e) => {
+    e.preventDefault();
+    app.options.push(e.target.elements.option.value);
+    e.target.elements.option.value = '';
     renderApp();
 }
 
-const minusOne = () => {
-    num--;
+const removeAllItems = () => {
+    app.options = [];
     renderApp();
-}
-
-const reset = () => {
-    num = 0;
-    renderApp();
-}
-
-
-const renderApp = () => {
-    const templateTwo = (
-        <div>
-            <h1>{num}</h1>
-            <button onClick={addOne}>Counter++</button>
-            <button onClick={minusOne}>Counter--</button>
-            <button onClick={reset}>Reset</button>
-        </div>
-    );
-    ReactDOM.render(templateTwo, element);
 }
 
 const element = document.getElementById("app");
+
+const renderApp = () => {
+    const template = ( 
+        <div>
+            <h1>{app.title}</h1>
+            {app.subtitle && <p>{app.subtitle}</p>}
+            <p>{app.options.length > 0 ? 'Here are your options': 'No Options'}</p>
+            <ol>
+                {app.getListItems()}
+            </ol>
+            <form onSubmit={onFormSubmit}>
+                <input type="text" name="option"/>
+                <button>Add Option</button>
+            </form>
+            <button onClick={removeAllItems}>Remove All Items</button>
+        </div> 
+    );
+    ReactDOM.render(template, element);
+}
+
 renderApp();
+
+
+
