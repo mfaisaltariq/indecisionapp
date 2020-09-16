@@ -1,58 +1,43 @@
-"use strict";
-
-console.log("app running");
-
-// JSX - JavaScript XML
-
-const app = {
-    title: "Indecision App",
-    subtitle: "Let the computer make decisions.",
-    options: [],
-    getListItems() {
-        return this.options.map((item) => <li key={item}>{item}</li>)
+class Header extends React.Component {
+    render() {
+        return (
+            <div>
+                <h1>Indecision App</h1>
+                <h2>Let the computer make decisions</h2>
+            </div>
+        )
     }
 }
 
-const submitForm = (e) => {
-    e.preventDefault();
-    app.options.push(e.target.elements.option.value);
-    e.target.elements.option.value = '';
-    renderApp();
+class Action extends React.Component {
+    render() {
+        return (
+            <div>
+            <button>What should I do?</button>
+            </div>
+        )
+    }
 }
 
-const removeAllItems = () => {
-    app.options = [];
-    renderApp();
+class Options extends React.Component {
+    render() {
+        return (
+            <div>
+                <ol>    
+                <li>Option 1</li>
+                <li>Option 2</li>
+                </ol>
+            </div>
+        )
+    }
 }
 
-const pickRandom = () => {
-    const rand = Math.floor(Math.random() * app.options.length);
-    alert (app.options[rand]);
-}
+const jsx = (
+    <div>
+        <Header />
+        <Action />
+        <Options />
+    </div>
+)
 
-const element = document.getElementById("app");
-
-const renderApp = () => {
-    const template = ( 
-        <div>
-            <h1>{app.title}</h1>
-            {app.subtitle && <p>{app.subtitle}</p>}
-            <p>{app.options.length > 0 ? 'Here are your options': 'No Options'}</p>
-            <ol>
-                {app.getListItems()}
-            </ol>
-            <button onClick={removeAllItems}>Remove All Items</button>
-            <button disabled={app.options.length === 0} onClick={pickRandom}>What should I do?</button>
-            <form onSubmit={submitForm}>
-                <input type="text" name="option"/>
-                <button>Add Option</button>
-            </form>
-        </div> 
-    );
-    ReactDOM.render(template, element);
-}
-
-renderApp();
-
-
-
+ReactDOM.render(jsx, document.getElementById('app'));
