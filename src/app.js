@@ -3,13 +3,13 @@ class IndecisionApp extends React.Component {
         super(props)
         this.deleteAll = this.deleteAll.bind(this);
         this.pickRandom = this.pickRandom.bind(this);
+        this.addOption = this.addOption.bind(this);
         this.state = {
             "title": "Indecision App",
             "subTitle": "Let the computer make decisions",
             "options": ["Work", "Sleep", "Excercise"]
         }
     }
-
     deleteAll () {
         this.setState(() => {
             return {
@@ -21,6 +21,14 @@ class IndecisionApp extends React.Component {
     pickRandom() {
         const rand = Math.floor(Math.random() * this.state.options.length);
         alert(this.state.options[rand])
+    }
+
+    addOption(option) {
+        this.setState((prevState) => {
+            return {
+                "options": prevState.options.concat([option])
+            }
+        })
     }
     render() {
         return (
@@ -37,7 +45,7 @@ class IndecisionApp extends React.Component {
                     options={this.state.options} 
                     removeOptions={this.deleteAll}
                 /> 
-                <AddOption />
+                <AddOption addOption={this.addOption}/>
             </div>
         )
     }
@@ -89,12 +97,17 @@ class Option extends React.Component {
 }
 
 class AddOption extends React.Component {
+    constructor(props) {
+        super(props);
+        this.addOption = this.addOption.bind(this);
+    }
     addOption(e) {
         e.preventDefault();
         const val = e.target.elements.option.value.trim();
         if(val) {
-            alert(val);
+            this.props.addOption(val);
         }
+        e.target.elements.option.value = ""
     }
     render () {
         return (
