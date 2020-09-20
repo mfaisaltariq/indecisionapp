@@ -7,7 +7,7 @@ class IndecisionApp extends React.Component {
         this.state = {
             "title": "Indecision App",
             "subTitle": "Let the computer make decisions",
-            "options": ["Work", "Sleep", "Excercise"]
+            "options": []
         }
     }
     deleteAll () {
@@ -67,22 +67,32 @@ class Header extends React.Component {
     }
 }
 
-class Action extends React.Component {
-    render() {
-        return (
-            <div>
-            <button disabled={!this.props.hasOptions} onClick={this.props.pickRandom}>What should I do?</button>
-            </div>
-        )
-    }
+const Action = (props) => {
+    return (
+        <div>
+            <button 
+                disabled={!props.hasOptions} 
+                onClick={props.pickRandom}
+            >
+                What should I do?
+            </button>
+        </div>
+    )
 }
 
 class Options extends React.Component {
     render() {
         return (
             <div>
-                <button onClick={this.props.removeOptions}>Remove All</button>
-                <div>{this.props.options.length > 0 ? "Options Are:" : "No Options"}</div>
+                <button 
+                    disabled={!this.props.options.length > 0}
+                    onClick={this.props.removeOptions}
+                >
+                    Remove All
+                </button>
+                <div>
+                    {this.props.options.length > 0 ? "Options Are:" : "No Options"}
+                </div>
                 {
                     this.props.options.map((option) => <Option key={option} optionText={option}/>) 
                 } 
@@ -116,7 +126,7 @@ class AddOption extends React.Component {
         this.setState(() => {
             return { error } 
         })
-        // e.target.elements.option.value = ""
+        e.target.elements.option.value = ""
     }
     render () {
         return (
