@@ -7,15 +7,11 @@ class IndecisionApp extends React.Component {
         this.state = {
             "title": "Indecision App",
             "subTitle": "Let the computer make decisions",
-            "options": []
+            "options": props.options
         }
     }
     deleteAll () {
-        this.setState(() => {
-            return {
-                "options": []
-            }
-        }) 
+        this.setState(() => ({ "options": [] }))
     }
 
     pickRandom() {
@@ -29,17 +25,15 @@ class IndecisionApp extends React.Component {
         } else if (this.state.options.indexOf(option) > -1 ){
             return "Option already exists. Option a unique value."
         }
-        this.setState((prevState) => {
-            return {
-                "options": prevState.options.concat([option])
-            }
-        })
+        this.setState((prevState) => ({
+            "options": prevState.options.concat([option])
+        }));
+
     }
     render() {
         return (
             <div>
                 <Header 
-                    title={this.state.title} 
                     subTitle={this.state.subTitle}
                 />
                 <Action 
@@ -56,13 +50,21 @@ class IndecisionApp extends React.Component {
     }
 }
 
+IndecisionApp.defaultProps = {
+    "options": []
+}
+
 const Header = (props) => {
     return (
         <div>
             <h1>{props.title}</h1>
-            <h2>{props.subTitle}</h2>
+            {props.subTitle && <h2>{props.subTitle}</h2>}
         </div>
     )
+}
+
+Header.defaultProps = {
+    "title": "Indecision"
 }
 
 const Action = (props) => {
@@ -117,9 +119,7 @@ class AddOption extends React.Component {
         e.preventDefault();
         const val = e.target.elements.option.value.trim();
         const error = this.props.addOption(val);
-        this.setState(() => {
-            return { error } 
-        })
+        this.setState(() => ({ error }))
         e.target.elements.option.value = ""
     }
     render () {
