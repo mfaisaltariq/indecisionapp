@@ -24,6 +24,11 @@ class IndecisionApp extends React.Component {
     }
 
     addOption(option) {
+        if (!option) {
+            return "Enter a valid value."
+        } else if (this.state.options.indexOf(option) > -1 ){
+            return "Option already exists. Option a unique value."
+        }
         this.setState((prevState) => {
             return {
                 "options": prevState.options.concat([option])
@@ -100,21 +105,28 @@ class AddOption extends React.Component {
     constructor(props) {
         super(props);
         this.addOption = this.addOption.bind(this);
+        this.state = {
+            error: undefined
+        }
     }
     addOption(e) {
         e.preventDefault();
         const val = e.target.elements.option.value.trim();
-        if(val) {
-            this.props.addOption(val);
-        }
-        e.target.elements.option.value = ""
+        const error = this.props.addOption(val);
+        this.setState(() => {
+            return { error } 
+        })
+        // e.target.elements.option.value = ""
     }
     render () {
         return (
-            <form onSubmit={this.addOption}>
-                <input type='text' name='option'></input>
-                <button>Add Option</button>
-            </form>
+            <div>
+                {this.state.error && <p>{this.state.error}</p>}
+                <form onSubmit={this.addOption}>
+                    <input type='text' name='option'></input>
+                    <button>Add Option</button>
+                </form>
+            </div>
         )
     }
 }
