@@ -11,6 +11,23 @@ class IndecisionApp extends React.Component {
             "options": props.options
         }
     }
+
+    componentWillMount() {
+        console.log("Component Will Mount");
+    }
+    componentDidMount() {
+        console.log("Component Did Mount");
+    }
+
+    componentDidUpdate() {
+        console.log("Componnennt Did Update");
+    }
+
+    componentWillUnmount() {
+        console.log("Component Will Unmount");
+    }
+
+
     btnRemoveAll () {
         this.setState(() => ({ "options": [] }))
     }
