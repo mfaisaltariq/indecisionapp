@@ -1,25 +1,32 @@
 class IndecisionApp extends React.Component {
     constructor(props) {
         super(props)
-        this.deleteAll = this.deleteAll.bind(this);
-        this.pickRandom = this.pickRandom.bind(this);
-        this.addOption = this.addOption.bind(this);
+        this.btnRemoveAll = this.btnRemoveAll.bind(this);
+        this.btnPickRandom = this.btnPickRandom.bind(this);
+        this.btnAddOption = this.btnAddOption.bind(this);
+        this.btnRemoveOne = this.btnRemoveOne.bind(this);
         this.state = {
             "title": "Indecision App",
             "subTitle": "Let the computer make decisions",
             "options": props.options
         }
     }
-    deleteAll () {
+    btnRemoveAll () {
         this.setState(() => ({ "options": [] }))
     }
 
-    pickRandom() {
+    btnRemoveOne (optionToRemove) {
+        this.setState((prevState) => ({
+            options: prevState.options.filter((option) => optionToRemove !== option)
+        }))
+    }
+
+    btnPickRandom() {
         const rand = Math.floor(Math.random() * this.state.options.length);
         alert(this.state.options[rand])
     }
 
-    addOption(option) {
+    btnAddOption(option) {
         if (!option) {
             return "Enter a valid value."
         } else if (this.state.options.indexOf(option) > -1 ){
@@ -38,13 +45,14 @@ class IndecisionApp extends React.Component {
                 />
                 <Action 
                     hasOptions={this.state.options.length > 0}
-                    pickRandom={this.pickRandom}
+                    btnPickRandom={this.btnPickRandom}
                 />
                 <Options 
                     options={this.state.options} 
-                    removeOptions={this.deleteAll}
+                    btnRemoveAll={this.btnRemoveAll}
+                    btnRemoveOne={this.btnRemoveOne}
                 /> 
-                <AddOption addOption={this.addOption}/>
+                <AddOption btnAddOption={this.btnAddOption}/>
             </div>
         )
     }
@@ -72,7 +80,7 @@ const Action = (props) => {
         <div>
             <button 
                 disabled={!props.hasOptions} 
-                onClick={props.pickRandom}
+                onClick={props.btnPickRandom}
             >
                 What should I do?
             </button>
@@ -85,7 +93,7 @@ const Options = (props) => {
         <div>
             <button 
                 disabled={!props.options.length > 0}
-                onClick={props.removeOptions}
+                onClick={props.btnRemoveAll}
             >
                 Remove All
             </button>
@@ -93,7 +101,13 @@ const Options = (props) => {
                 {props.options.length > 0 ? "Options Are:" : "No Options"}
             </div>
             {
-                props.options.map((option) => <Option key={option} optionText={option}/>) 
+                props.options.map((option) => (
+                    <Option 
+                        key={option} 
+                        optionText={option}
+                        btnRemoveOne={props.btnRemoveOne}
+                    />
+                ))
             } 
         </div>
     )
@@ -103,6 +117,13 @@ const Option = (props) => {
     return (
         <div>
             {props.optionText}
+            <button
+                onClick={(e) => {
+                    props.btnRemoveOne(props.optionText)
+                }}
+            >
+                Remove
+            </button>
         </div>
     )
 }
@@ -110,15 +131,15 @@ const Option = (props) => {
 class AddOption extends React.Component {
     constructor(props) {
         super(props);
-        this.addOption = this.addOption.bind(this);
+        this.btnAddOption = this.btnAddOption.bind(this);
         this.state = {
             error: undefined
         }
     }
-    addOption(e) {
+    btnAddOption(e) {
         e.preventDefault();
         const val = e.target.elements.option.value.trim();
-        const error = this.props.addOption(val);
+        const error = this.props.btnAddOption(val);
         this.setState(() => ({ error }))
         e.target.elements.option.value = ""
     }
@@ -126,7 +147,7 @@ class AddOption extends React.Component {
         return (
             <div>
                 {this.state.error && <p>{this.state.error}</p>}
-                <form onSubmit={this.addOption}>
+                <form onSubmit={this.btnAddOption}>
                     <input type='text' name='option'></input>
                     <button>Add Option</button>
                 </form>
