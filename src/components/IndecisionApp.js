@@ -17,10 +17,7 @@ export default class IndecisionApp extends React.Component {
             "options": props.options
         }
     }
-
-    componentWillMount() {
-        console.log("Component Will Mount");
-    }
+    
     componentDidMount() {
         try {
             const json = localStorage.getItem('options');
