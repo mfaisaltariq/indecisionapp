@@ -3,10 +3,12 @@ import AddOption from './AddOption'
 import Options from './Options'
 import Header from './Header'
 import Action from './Action'
+import OptionModal from './OptionModal';
 
 export default class IndecisionApp extends React.Component {
     state =  {
-        options: []
+        options: [],
+        selectedOption: undefined
     }
     componentDidMount() {
         try {
@@ -46,7 +48,9 @@ export default class IndecisionApp extends React.Component {
 
     btnPickRandom = () => {
         const rand = Math.floor(Math.random() * this.state.options.length);
-        alert(this.state.options[rand])
+        this.setState(() => ({
+            selectedOption: this.state.options[rand]
+        }))
     }
 
     btnAddOption = (option) => {
@@ -60,6 +64,13 @@ export default class IndecisionApp extends React.Component {
         }));
 
     }
+
+    btnModalOK = () => {
+        this.setState(() => ({
+            "selectedOption": undefined
+        }));
+    }
+
     render() {
         const subtitle = "Let the computer make decisions."
         return (
@@ -77,6 +88,10 @@ export default class IndecisionApp extends React.Component {
                     btnRemoveOne={this.btnRemoveOne}
                 /> 
                 <AddOption btnAddOption={this.btnAddOption}/>
+                <OptionModal 
+                    selectedOption={this.state.selectedOption}
+                    btnModalOK={this.btnModalOK}
+                />
             </div>
         )
     }

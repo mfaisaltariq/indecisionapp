@@ -1,5 +1,12 @@
 # indecisionapp
 
+Run via Web Pack Dev Server. The bundle.js file will be maintined in browser.
+
+```
+npm run dev-server
+```
+
+
 To run using babel cli 
 
 ```

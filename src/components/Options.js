@@ -1,29 +1,27 @@
 import React from 'react';
 import Option from './Option';
 
-const Options = (props) => {
-    return (
+const Options = (props) => (
+    <div>
+        <button 
+            disabled={!props.options.length > 0}
+            onClick={props.btnRemoveAll}
+        >
+            Remove All
+        </button>
         <div>
-            <button 
-                disabled={!props.options.length > 0}
-                onClick={props.btnRemoveAll}
-            >
-                Remove All
-            </button>
-            <div>
-                {props.options.length > 0 ? "Options Are:" : "No Options"}
-            </div>
-            {
-                props.options.map((option) => (
-                    <Option 
-                        key={option} 
-                        optionText={option}
-                        btnRemoveOne={props.btnRemoveOne}
-                    />
-                ))
-            } 
+            {props.options.length > 0 ? "Options Are:" : "No Options"}
         </div>
-    )
-}
+        {
+            props.options.map((option) => (
+                <Option 
+                    key={option} 
+                    optionText={option}
+                    btnRemoveOne={props.btnRemoveOne}
+                />
+            ))
+        } 
+    </div>
+)
 
 export default Options;
