@@ -5,19 +5,9 @@ import Header from './Header'
 import Action from './Action'
 
 export default class IndecisionApp extends React.Component {
-    constructor(props) {
-        super()
-        this.btnRemoveAll = this.btnRemoveAll.bind(this);
-        this.btnPickRandom = this.btnPickRandom.bind(this);
-        this.btnAddOption = this.btnAddOption.bind(this);
-        this.btnRemoveOne = this.btnRemoveOne.bind(this);
-        this.state = {
-            "title": "Indecision App",
-            "subTitle": "Let the computer make decisions",
-            "options": props.options
-        }
+    state =  {
+        options: []
     }
-    
     componentDidMount() {
         try {
             const json = localStorage.getItem('options');
@@ -44,22 +34,22 @@ export default class IndecisionApp extends React.Component {
     }
 
 
-    btnRemoveAll () {
+    btnRemoveAll = () => {
         this.setState(() => ({ "options": [] }))
     }
 
-    btnRemoveOne (optionToRemove) {
+    btnRemoveOne = (optionToRemove) => {
         this.setState((prevState) => ({
             options: prevState.options.filter((option) => optionToRemove !== option)
         }))
     }
 
-    btnPickRandom() {
+    btnPickRandom = () => {
         const rand = Math.floor(Math.random() * this.state.options.length);
         alert(this.state.options[rand])
     }
 
-    btnAddOption(option) {
+    btnAddOption = (option) => {
         if (!option) {
             return "Enter a valid value."
         } else if (this.state.options.indexOf(option) > -1 ){
@@ -71,10 +61,11 @@ export default class IndecisionApp extends React.Component {
 
     }
     render() {
+        const subtitle = "Let the computer make decisions."
         return (
             <div>
                 <Header 
-                    subTitle={this.state.subTitle}
+                    subTitle={subtitle}
                 />
                 <Action 
                     hasOptions={this.state.options.length > 0}
