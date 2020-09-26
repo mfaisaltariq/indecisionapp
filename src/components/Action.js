@@ -5,6 +5,7 @@ const Action = (props) => (
         <button 
             disabled={!props.hasOptions} 
             onClick={props.btnPickRandom}
+            className="big-button"
         >
             What should I do?
         </button>
