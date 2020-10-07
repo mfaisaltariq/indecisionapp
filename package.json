@@ -1,0 +1,19 @@
+{
+  "name": "indision-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mfaisaltariq/indecisionapp.git"
+  },
+  "author": "mfaisaltariq",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mfaisaltariq/indecisionapp/issues"
+  },
+  "homepage": "https://github.com/mfaisaltariq/indecisionapp#readme"
+}
