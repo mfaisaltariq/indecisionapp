@@ -3,8 +3,6 @@ import React, {useState, useEffect} from 'react';
 const AddOption = (props) => {
     const [error, setError] = useState(undefined);
 
-    useEffect(() => console.log(error), [error])
-
     const addNewOption = (e) => {
         e.preventDefault();
         const val = e.target.elements.option.value.trim();

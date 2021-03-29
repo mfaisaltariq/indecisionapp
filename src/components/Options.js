@@ -13,6 +13,7 @@ const Options = props => (
                     key={option}
                     index={index + 1}
                     text={option}
+                    removeOne={props.removeOne}
                 />
             ))
         }

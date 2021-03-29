@@ -17,6 +17,10 @@ const IndecisionApp = () => {
         setOptions([])
     }
 
+    const removeOne = (optionToRemove) => {
+        setOptions(options.filter((option) => optionToRemove !== option))
+    }
+
     const addNewOption = (option) => {
         if(!option){
             return "Enter a valid value";
@@ -33,7 +37,7 @@ const IndecisionApp = () => {
         <div>
             <Header />
             <Action pickRandom={pickRandom}/>
-            <Options options={options} removeAll={removeAll}/>
+            <Options options={options} removeAll={removeAll} removeOne={removeOne}/>
             <AddOptions addNewOption={addNewOption}/>
         </div>
     )
